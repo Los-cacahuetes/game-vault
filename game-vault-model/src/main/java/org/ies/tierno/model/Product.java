@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public abstract class Product {
-    protected String id;
+    protected int id;
     protected String name;
     protected String description;
     protected Double price;

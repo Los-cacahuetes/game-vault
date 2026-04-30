@@ -14,7 +14,7 @@ public class Game extends Product{
     private String pegi;
     private String minRequirement;
 
-    public Game(String id, String name, String description, Double price, Double discount, LocalDate releaseDate, String type, String genre, String developer, String editor, String platform, String pegi, String minRequirement) {
+    public Game(int id, String name, String description, Double price, Double discount, LocalDate releaseDate, String type, String genre, String developer, String editor, String platform, String pegi, String minRequirement) {
         super(id, name, description, price, discount, releaseDate, type);
         this.genre = genre;
         this.developer = developer;
