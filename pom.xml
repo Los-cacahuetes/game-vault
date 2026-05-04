@@ -9,8 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>game-vault-model</module>
-        <module>game-vault-reader</module>
         <module>game-vault-app</module>
     </modules>
 
