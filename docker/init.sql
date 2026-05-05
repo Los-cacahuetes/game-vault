@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS game_vault;
+
 USE game_vault;
 
 CREATE TABLE user (
