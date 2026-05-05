@@ -1,0 +1,30 @@
+CREATE DATABASE IF NOT EXISTS game_vault;
+USE game_vault;
+
+CREATE TABLE user (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    balance DECIMAL(10, 2) NOT NULL DEFAULT 0.00
+);
+
+CREATE TABLE game (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    genre VARCHAR(50),
+    price DECIMAL(10, 2) NOT NULL,
+    discount_percentage INT NOT NULL DEFAULT 0 CHECK (discount_percentage BETWEEN 0 AND 100)
+);
+
+CREATE TABLE purchase(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    game_id INT NOT NULL,
+    purchase_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    amount_paid DECIMAL(10, 2) NOT NULL,
+    
+    CONSTRAINT fk_user FOREIGN KEY (user_id)
+		REFERENCES user(id) ON DELETE CASCADE,
+	CONSTRAINT fk_game FOREIGN KEY (game_id)
+		REFERENCES game(id) ON DELETE RESTRICT
+);

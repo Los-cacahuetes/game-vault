@@ -3,12 +3,13 @@ package org.ies.tierno.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
-public class User {
+public class Game{
     private int id;
-    private String username;
-    private String email;
-    private String balance;
-    private String role;
+    private String name;
+    private String genre;
+    private double price;
 }

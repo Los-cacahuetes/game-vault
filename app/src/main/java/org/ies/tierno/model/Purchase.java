@@ -7,10 +7,10 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class Library {
+public class Purchase {
+    private int id;
     private int userId;
-    private int productId;
-    private LocalDate purchaseDate;
-    private int hoursPlayed;
-    private LocalDate lastSession;
+    private int gameId;
+    private LocalDate date;
+    private double totalPaid;
 }

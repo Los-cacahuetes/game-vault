@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PurchaseLine {
+public class User {
     private int id;
-    private int purchaseId;
-    private int productId;
-    private double pricePaid;
+    private String username;
+    private String email;
+    private String balance;
 }
