@@ -1,4 +1,85 @@
 package org.ies.tierno.jdbc;
 
+import lombok.extern.log4j.Log4j;
+import org.ies.tierno.model.Game;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Log4j
 public class GameDAO {
+
+    public void create (String name, String genre, double price) {
+        String sql = "INSTERT INTO game (name, genre, price) VALUES (?, ?, ?)";
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setString(1, name);
+            ps.setString(2, genre);
+            ps.setDouble(3, price);
+            ps.executeUpdate();
+            log.info("Juego creado con éxito");
+        } catch (SQLException e) {
+            log.error("Error al crear: " + e.getMessage());
+        }
+    }
+
+    public List<Game> read() {
+        List<Game> games = new ArrayList<>();
+        String sql = "SELECT * FROM game";
+
+        try(
+                Connection conn = DatabaseConnection.getConnection();
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+        ) {
+            while(rs.next()) {
+                games.add(new Game(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("genre"),
+                        rs.getDouble("price")
+                ));
+            }
+
+        } catch(SQLException e) {
+            log.error("Error al leer: " + e.getMessage());
+        }
+        return games;
+    }
+
+    public void update(int id, String name, String genre, double price) {
+        String sql = "UPDATE game SET name = ?, genre = ?, price = ? WHERE ID = ?";
+
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setString(1, name);
+            ps.setString(2, genre);
+            ps.setDouble(3, price);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+            log.info("Juego modificado con éxito");
+        } catch (SQLException e) {
+            log.error("Error al actualizar: " + e.getMessage());
+        }
+    }
+
+    public void delete(int id) {
+        String sql = "DELETE FROM game WHERE id = ?";
+
+        try(
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setInt(1, id);
+            int rows = ps.executeUpdate();
+            if (rows > 0) log.info("Juego eliminado");
+        } catch (SQLException e) {
+            log.error("Error al eliminar " + e.getMessage());
+        }
+    }
 }

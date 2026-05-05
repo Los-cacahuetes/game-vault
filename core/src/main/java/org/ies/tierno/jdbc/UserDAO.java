@@ -26,7 +26,7 @@ public class UserDAO {
         }
     }
 
-    public List<User> List() {
+    public List<User> read() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user";
 
@@ -45,7 +45,7 @@ public class UserDAO {
             }
 
         } catch (SQLException e) {
-            log.error("Error al listar: " + e.getMessage());
+            log.error("Error al leer: " + e.getMessage());
         }
 
         return users;
@@ -61,6 +61,7 @@ public class UserDAO {
             ps.setString(1, newUsername);
             ps.setString(2, newEmail);
             ps.setDouble(3, newBalance);
+            ps.setInt(4, id);
             ps.executeUpdate();
             log.info("Usuario actualizado correctamente");
 
