@@ -12,4 +12,5 @@ public class Game{
     private String name;
     private String genre;
     private double price;
+    private int discountPct;
 }
