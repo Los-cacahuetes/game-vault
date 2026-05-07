@@ -10,6 +10,7 @@ import java.util.List;
 
 @Log4j
 public class PurchaseDAO {
+    // CRUD ************************************************************************************************
     public void create(int userId, int gameId, LocalDate date, double totalPaid) {
         String sql = "INSERT INTO purchase (userId, gameId, date, totalPaid) VALUES (?, ?, ?, ?)";
         try (
@@ -84,5 +85,25 @@ public class PurchaseDAO {
         } catch (SQLException e) {
             log.error("Error al eliminar: " + e.getMessage());
         }
+    }
+    // FIN CRUD ***********************************************************************************
+
+    public boolean exists(int userId, int gameId) {
+        String sql = "SELECT COUNT(*) FROM purchase WHERE userId = ? AND gameId = ?";
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setInt(1, userId);
+            ps.setInt(2, gameId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Error al verificar existencai de compra: " + e.getMessage());
+        }
+        return false;
     }
 }

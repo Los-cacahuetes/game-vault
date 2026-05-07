@@ -88,7 +88,7 @@ public class UserDAO {
     // FIN CRUD ********************************************************************************
 
     public User findById(int id) {
-        String sql = "SELECT * FORM users WHERE id = ?";
+        String sql = "SELECT * FORM user WHERE id = ?";
 
         try (
                 Connection conn = DatabaseConnection.getConnection();
