@@ -126,4 +126,6 @@ public class GameDAO {
             log.error("Error al actualizar el descuento: " + e.getMessage());
         }
     }
+
+
 }
