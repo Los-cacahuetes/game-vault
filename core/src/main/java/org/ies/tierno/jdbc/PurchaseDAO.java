@@ -1,6 +1,7 @@
 package org.ies.tierno.jdbc;
 
 import lombok.extern.log4j.Log4j;
+import org.ies.tierno.model.Game;
 import org.ies.tierno.model.Purchase;
 
 import java.sql.*;
@@ -12,7 +13,7 @@ import java.util.List;
 public class PurchaseDAO {
     // CRUD ************************************************************************************************
     public void create(int userId, int gameId, LocalDate date, double totalPaid) {
-        String sql = "INSERT INTO purchase (userId, gameId, date, totalPaid) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO purchase (user_id, game_id, date, amount_paid) VALUES (?, ?, ?, ?)";
         try (
                 Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -40,10 +41,10 @@ public class PurchaseDAO {
             while (rs.next()) {
                 purchases.add(new Purchase(
                         rs.getInt("id"),
-                        rs.getInt("userId"),
-                        rs.getInt("gameId"),
+                        rs.getInt("user_id"),
+                        rs.getInt("game_id"),
                         rs.getObject("date", LocalDate.class),
-                        rs.getDouble("totalPaid")
+                        rs.getDouble("amount_paid")
                 ));
             }
         } catch (SQLException e) {
@@ -105,5 +106,31 @@ public class PurchaseDAO {
             log.error("Error al verificar existencai de compra: " + e.getMessage());
         }
         return false;
+    }
+
+    public List<Game> getUserGames(int userId) {
+        List<Game> games = new ArrayList<>();
+        String sql = "SELECT game_id FROM purchase WHERE user_id = ?";
+        GameDAO gameDAO = new GameDAO();
+
+        try (
+                Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql);
+        ) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                int gameId = rs.getInt("game_id");
+
+                Game game = gameDAO.findById(gameId);
+
+                if (game != null) {
+                    games.add(game);
+                }
+            }
+
+        } catch (SQLException e) {
+            log.error("No se ha podido encontrar los juegos");
+        }
+        return games;
     }
 }

@@ -9,6 +9,7 @@ import org.ies.tierno.model.Purchase;
 import org.ies.tierno.model.User;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Log4j
 public class PurchaseLogic {
@@ -35,19 +36,39 @@ public class PurchaseLogic {
         }
 
         double balance = user.getBalance();
-        double price = game.getPrice();
+        double discountPct = game.getDiscountPct();
+        double price = game.getPrice() - discountPct / 100;
 
         if (balance < price) {
             log.error("Saldo insuficiente");
             return;
         }
 
-        double newBalance = balance - price;
+        double newBalance = balance - price ;
         userDAO.updateBalance(userId, newBalance);
 
         purchaseDAO.create(userId, gameId, LocalDate.now(), price);
 
         log.info("Compra realizada con éxito");
+    }
 
+    public void showLibrary(int userId) {
+        User user = userDAO.findById(userId);
+
+        if (user == null) {
+            log.info("Usuario no encontrado");
+            return;
+        }
+
+        List<Game> library = purchaseDAO.getUserGames(userId);
+
+        if (library.isEmpty()) {
+            log.info("El usuario no posee ningún juego en su biblioteca");
+            return;
+        }
+
+        for (Game game: library) {
+            log.info(game);
+        }
     }
 }
