@@ -44,7 +44,7 @@ public class PurchaseLogic {
             return;
         }
 
-        double newBalance = balance - price ;
+        double newBalance = balance - price;
         userDAO.updateBalance(userId, newBalance);
 
         purchaseDAO.create(userId, gameId, LocalDate.now(), price);
@@ -67,7 +67,7 @@ public class PurchaseLogic {
             return;
         }
 
-        for (Game game: library) {
+        for (Game game : library) {
             log.info(game);
         }
     }

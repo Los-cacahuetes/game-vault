@@ -35,7 +35,7 @@ public class GameLogic {
             return;
         }
 
-        for (Game game: games) {
+        for (Game game : games) {
             double discountAmount = game.getPrice() * (game.getDiscountPct() / 100d);
             double finalPrice = game.getPrice() - discountAmount;
             log.info("ID. " + game.getId() + " | " + game.getName() + " | " + game.getGenre() + " | " + finalPrice + "€");
