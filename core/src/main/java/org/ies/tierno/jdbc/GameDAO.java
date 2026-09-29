@@ -9,7 +9,6 @@ import java.util.List;
 
 @Log4j
 public class GameDAO {
-    // CRUD ***************************************************************************************
     public void create(String name, String genre, double price, int discountPct) {
         String sql = "INSTERT INTO game (name, genre, price, discount_percentage) VALUES (?, ?, ?, ?)";
         try (

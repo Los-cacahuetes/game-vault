@@ -9,7 +9,6 @@ import java.util.List;
 
 @Log4j
 public class UserDAO {
-    // CRUD *****************************************************************************
     public void create(String username, String email, double balance) {
         String sql = "INSERT INTO user (username, email, balance) VALUES (?, ?, ?)";
         try (

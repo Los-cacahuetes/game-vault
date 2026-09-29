@@ -11,7 +11,6 @@ import java.util.List;
 
 @Log4j
 public class PurchaseDAO {
-    // CRUD ************************************************************************************************
     public void create(int userId, int gameId, LocalDate date, double totalPaid) {
         String sql = "INSERT INTO purchase (user_id, game_id, date, amount_paid) VALUES (?, ?, ?, ?)";
         try (
